@@ -1,0 +1,538 @@
+print("Welcome To Tic TAC TOE")
+print("Type 'start' to start the game")
+print("Type 'quit' to quit the game")
+
+command=""
+while command.lower()!="quit":
+    command=input('> ')
+    if command.lower()=="start" or command.lower()=="restart":
+        print("Type S for Single Player ")
+        print("Type M for Multi Player ")
+        command=input('> ')
+        if command.lower()=="m":
+            list=["0","1","2","3","4","5","6","7","8"]
+            winner=None
+            toss=None
+            def board():
+                print(f' {list[0]} | {list[1]}  | {list[2]}   ')
+                print(f'---|----|---')
+                print(f' {list[3]} | {list[4]}  | {list[5]}    ')
+                print(f'---|----|---')
+                print(f' {list[6]} | {list[7]}  | {list[8]}    ')
+            def horizontal():
+                global winner
+                if list[0] == list[1] == list[2]:
+                    winner = list[0]
+                    return True
+                elif list[3] == list[4] == list[5]:
+                    winner = list[3]
+                    return True
+                elif list[6] == list[7] == list[8]:
+                    winner = list[6]
+                    return True
+
+
+            def verticalwin():
+                global winner
+                if list[0] == list[3] == list[6]:
+                    winner = list[0]
+                    return True
+                elif list[1] == list[4] == list[7]:
+                    winner = list[1]
+                    return True
+                elif list[2] == list[5] == list[8]:
+                    winner = list[2]
+                    return True
+
+            def diagonalwin():
+                global winner
+                if list[0] == list[4] == list[8]:
+                    winner = list[0]
+                    return True
+                elif list[2] == list[4] == list[6]:
+                    winner = list[2]
+                    return True
+            def tie():
+                if list[0]!="0" and list[1]!="1" and list[2]!="2" and list[3]!="3" and list[4]!="4" and list[5]!="5" and list[6]!="6" and list[7]!="7" and  list[8]!="8":
+                    return True
+
+
+
+            print("Multiplayer Tic tac toe")
+            xplayer=str(input("Enter Name for Player1 " )).upper()
+            while True:
+                symbol1 = input(f"{xplayer} please enter your Symbol ").upper()
+                if symbol1 == "O" or symbol1 == "X":
+                    break
+                else:
+                    print("Please enter 'X' or 'O'")
+            print(xplayer, 'Your Symbol is', symbol1)
+            yplayer=str(input("Enter Name for Player2 " )).upper()
+            if symbol1 == "X":
+                symbol2 = "O"
+            else:
+                symbol2 = "X"
+            print(yplayer, 'Your Symbol is', symbol2)
+
+            import random
+            toss1=random.randint(0,1)
+
+
+
+
+            while(True):
+
+                toss=input(xplayer+" 'HEADS' or 'TAIL' Enter 1 for head 0 for tail ")
+
+                if toss.isdigit():
+                    toss = int(toss)
+                    if (toss == 1 or toss == 0):
+                        if toss1 == toss:
+                            print(xplayer + " You won the toss,Your turn")
+                            turn = 1
+                        else:
+                            print(xplayer + " You lose the toss, " + yplayer + " turn")
+                            turn = 0
+                        break
+                    else:
+                        print("> Please Enter Valid input <")
+                else:
+                    print("> Please Enter Valid input <")
+
+
+            board()
+            while (True):
+
+                if turn==1:
+
+                    xinput = input(xplayer + " Enter the position for , " + symbol1 + " ")
+                    while xinput not in ["0","1","2","3","4","5","6","7","8"]:
+                        print("Invalid input enter between(0-8)")
+                        xinput = input(xplayer + " Enter the position for , " + symbol1 + " ")
+                    xinput=int(xinput)
+
+
+
+                    while list[xinput]==symbol1 or list[xinput]==symbol2:
+                        print("Invalid input already occupied")
+                        xinput=input(xplayer + " Enter the position for ,"+symbol1+" " )
+                        while xinput not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
+                            print("Invalid input")
+                            xinput = input(xplayer + " Enter the position for ," + symbol1 + " ")
+                        xinput=int(xinput)
+
+                    list[xinput]=symbol1
+                    board()
+                    if horizontal():
+                        if winner==symbol1:
+                            print(xplayer+ " is winner")
+                        elif winner==symbol2:
+                            print(yplayer+ " is winner")
+                        break
+
+                    if verticalwin():
+                        if winner == symbol1:
+                            print(xplayer+ " is winner")
+                        elif winner == symbol2:
+                            print(yplayer+ " is winner")
+                        break
+                    if diagonalwin():
+                        if winner == symbol1:
+                            print(xplayer+ " is winner")
+                        elif winner == symbol2:
+                            print(yplayer+ " is winner")
+                        break
+                    if tie():
+                        print("Its a tie")
+                        break
+
+                    turn=turn-1
+
+
+                if turn==0:
+                    yinput = input(yplayer + " Enter the position for , " + symbol2 + " ")
+                    while yinput not in ["0","1","2","3","4","5","6","7","8"]:
+                        print("Invalid input enter between(0-8)")
+                        yinput = input(yplayer + " Enter the position for , " + symbol2 + " ")
+
+                    yinput=int(yinput)
+
+                    while list[yinput]==symbol1 or list[yinput]==symbol2:
+                        print("Invalid input already occupied")
+                        yinput=input(yplayer + " Enter the position for , "+symbol2+" " )
+                        while yinput not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
+                            print("Invalid input ")
+                            yinput = input(yplayer + " Enter the position for , " + symbol2 + " ")
+                        yinput=int(yinput)
+                    list[yinput]=symbol2
+                    board()
+                    if horizontal():
+                        if winner==symbol1:
+                            print(xplayer+ " is winner")
+                        elif winner==symbol2:
+                            print(yplayer+ " is winner")
+                        break
+
+                    if verticalwin():
+                        if winner == symbol1:
+                            print(xplayer+ " is winner")
+                        elif winner == symbol2:
+                            print(yplayer+ " is winner")
+                        break
+                    if diagonalwin():
+                        if winner == symbol1:
+                            print(xplayer+ " is winner")
+                        elif winner == symbol2:
+                            print(yplayer+ " is winner")
+                        break
+                    if tie():
+                        print("Its a tie")
+                        break
+                    turn=1
+            print("Type 'restart' to restart")
+            print("or type 'quit' to Quit")
+        if command.lower()=="s":
+
+            list = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
+            winner = None
+            toss = None
+            xinput = None
+
+
+            def board():
+                print(f' {list[0]} | {list[1]}  | {list[2]}   ')
+                print(f'---|----|---')
+                print(f' {list[3]} | {list[4]}  | {list[5]}    ')
+                print(f'---|----|---')
+                print(f' {list[6]} | {list[7]}  | {list[8]}    ')
+
+
+            def horizontal():
+                global winner
+                if list[0] == list[1] == list[2]:
+                    winner = list[0]
+                    return True
+                elif list[3] == list[4] == list[5]:
+                    winner = list[3]
+                    return True
+                elif list[6] == list[7] == list[8]:
+                    winner = list[6]
+                    return True
+
+
+            def verticalwin():
+                global winner
+                if list[0] == list[3] == list[6]:
+                    winner = list[0]
+                    return True
+                elif list[1] == list[4] == list[7]:
+                    winner = list[1]
+                    return True
+                elif list[2] == list[5] == list[8]:
+                    winner = list[2]
+                    return True
+
+
+            def diagonalwin():
+                global winner
+                if list[0] == list[4] == list[8]:
+                    winner = list[0]
+                    return True
+                elif list[2] == list[4] == list[6]:
+                    winner = list[2]
+                    return True
+
+
+            def tie():
+                if list[0] != "0" and list[1] != "1" and list[2] != "2" and list[3] != "3" and list[4] != "4" and list[5] != "5" and list[6] != "6" and list[7] != "7" and list[8] != "8":
+                    return True
+
+
+            def comp_draw():
+
+                if xinput == 4:
+                    if list[0] == "0":
+                        list[0] = comp
+                    elif list[1] == "1":
+                        list[1] = comp
+                    elif list[2] == "2":
+                        list[2] = comp
+                    elif list[3] == "3":
+                        list[3] = comp
+                    elif list[5] == "5":
+                        list[5] = comp
+                    elif list[6] == "6":
+                        list[6] = comp
+                    elif list[7] == "7":
+                        list[7] = comp
+                    elif list[8] == "8":
+                        list[8] = comp
+
+                elif xinput != 4 and list[4] != symbol1 and list[4] != comp:
+                    list[4] = comp
+                # Row 1
+                elif list[0] == symbol1 and list[1] == symbol1 and list[2] == "2":
+                    list[2] = comp
+                elif list[0] == symbol1 and list[2] == symbol1 and list[1] == "1":
+                    list[1] = comp
+                elif list[2] == symbol1 and list[1] == symbol1 and list[0] == "0":
+                    list[0] = comp
+                # Row 2
+                elif list[3] == symbol1 and list[4] == symbol1 and list[5] == "5":
+                    list[5] = comp
+                elif list[3] == symbol1 and list[5] == symbol1 and list[4] == "4":
+                    list[4] = comp
+                elif list[5] == symbol1 and list[4] == symbol1 and list[3] == "3":
+                    list[3] = comp
+                # row 3
+                elif list[6] == symbol1 and list[7] == symbol1 and list[8] == "8":
+                    list[8] = comp
+                elif list[6] == symbol1 and list[8] == symbol1 and list[7] == "7":
+                    list[7] = comp
+                elif list[8] == symbol1 and list[7] == symbol1 and list[6] == "6":
+                    list[6] = comp
+                # Column 1
+                elif list[0] == symbol1 and list[3] == symbol1 and list[6] == "6":
+                    list[6] = comp
+                elif list[0] == symbol1 and list[6] == symbol1 and list[3] == "3":
+                    list[3] = comp
+                elif list[6] == symbol1 and list[3] == symbol1 and list[0] == "0":
+                    list[0] = comp
+                # Column 2
+                elif list[1] == symbol1 and list[4] == symbol1 and list[7] == "7":
+                    list[7] = comp
+                elif list[1] == symbol1 and list[7] == symbol1 and list[4] == "4":
+                    list[4] = comp
+                elif list[7] == symbol1 and list[4] == symbol1 and list[1] == "1":
+                    list[1] = comp
+                # Column 3
+                elif list[2] == symbol1 and list[5] == symbol1 and list[8] == "8":
+                    list[8] = comp
+                elif list[2] == symbol1 and list[8] == symbol1 and list[5] == "5":
+                    list[5] = comp
+                elif list[8] == symbol1 and list[5] == symbol1 and list[2] == "2":
+                    list[2] = comp
+                # Daigonal 1
+                elif list[0] == symbol1 and list[4] == symbol1 and list[8] == "8":
+                    list[8] = comp
+                elif list[0] == symbol1 and list[8] == symbol1 and list[4] == "4":
+                    list[4] = comp
+                elif list[8] == symbol1 and list[4] == symbol1 and list[0] == "0":
+                    list[0] = comp
+                # Daigonal 2
+                elif list[2] == symbol1 and list[4] == symbol1 and list[6] == "6":
+                    list[6] = comp
+                elif list[2] == symbol1 and list[6] == symbol1 and list[4] == "4":
+                    list[4] = comp
+                elif list[6] == symbol1 and list[4] == symbol1 and list[2] == "2":
+                    list[2] = comp
+                else:
+                    if list[6] == "6":
+                        list[6] = comp
+                    elif list[1] == "1":
+                        list[1] = comp
+                    elif list[2] == "2":
+                        list[2] = comp
+                    elif list[3] == "3":
+                        list[3] = comp
+                    elif list[5] == "5":
+                        list[5] = comp
+                    elif list[7] == "7":
+                        list[7] = comp
+                    elif list[0] == "0":
+                        list[0] = comp
+                    elif list[8] == "8":
+                        list[8] = comp
+
+
+            def comp_win():
+
+                # Row 1
+                if list[0] == comp and list[1] == comp and list[2] == "2":
+                    list[2] = comp
+                elif list[0] == comp and list[2] == comp and list[1] == "1":
+                    list[1] = comp
+                elif list[2] == comp and list[1] == comp and list[0] == "0":
+                    list[0] = comp
+                # Row 2
+                elif list[3] == comp and list[4] == comp and list[5] == "5":
+                    list[5] = comp
+                elif list[3] == comp and list[5] == comp and list[4] == "4":
+                    list[4] = comp
+                elif list[5] == comp and list[4] == comp and list[3] == "3":
+                    list[3] = comp
+                # row 3
+                elif list[6] == comp and list[7] == comp and list[8] == "8":
+                    list[8] = comp
+                elif list[6] == comp and list[8] == comp and list[7] == "7":
+                    list[7] = comp
+                elif list[8] == comp and list[7] == comp and list[6] == "6":
+                    list[6] = comp
+                # Column 1
+                elif list[0] == comp and list[3] == comp and list[6] == "6":
+                    list[6] = comp
+                elif list[0] == comp and list[6] == comp and list[3] == "3":
+                    list[3] = comp
+                elif list[6] == comp and list[3] == comp and list[0] == "0":
+                    list[0] = comp
+                # Column 2
+                elif list[1] == comp and list[4] == comp and list[7] == "7":
+                    list[7] = comp
+                elif list[1] == comp and list[7] == comp and list[4] == "4":
+                    list[4] = comp
+                elif list[7] == comp and list[4] == comp and list[1] == "1":
+                    list[1] = comp
+                # Column 3
+                elif list[2] == comp and list[5] == comp and list[8] == "8":
+                    list[8] = comp
+                elif list[2] == comp and list[8] == comp and list[5] == "5":
+                    list[5] = comp
+                elif list[8] == comp and list[5] == comp and list[2] == "2":
+                    list[2] = comp
+                # Daigonal 1
+                elif list[0] == comp and list[4] == comp and list[8] == "8":
+                    list[8] = comp
+                elif list[0] == comp and list[8] == comp and list[4] == "4":
+                    list[4] = comp
+                elif list[8] == comp and list[4] == comp and list[0] == "0":
+                    list[0] = comp
+                # Daigonal 2
+                elif list[2] == comp and list[4] == comp and list[6] == "6":
+                    list[6] = comp
+                elif list[2] == comp and list[6] == comp and list[4] == "4":
+                    list[4] = comp
+                elif list[6] == comp and list[4] == comp and list[2] == "2":
+                    list[2] = comp
+
+
+            def tie():
+                if list[0] != "0" and list[1] != "1" and list[2] != "2" and list[3] != "3" and list[4] != "4" and list[5] != "5" and list[6] != "6" and list[7] != "7" and list[8] != "8":
+                    return True
+
+
+            print("Single player Tic tac toe")
+            xplayer = str(input("Enter Name for Player1 ")).upper()
+            while True:
+                symbol1 = input(f"{xplayer} please enter your Symbol ").upper()
+                if symbol1 == "O" or symbol1 == "X":
+                    break
+                else:
+                    print("Please enter 'X' or 'O'")
+            print(xplayer, 'Your Symbol is', symbol1)
+            if symbol1 == "X":
+                symbol2 = "O"
+            else:
+                symbol2 = "X"
+            comp = symbol2
+            print("computer symbol is " + symbol2)
+
+            import random
+
+            toss1 = random.randint(0, 1)
+
+            while (True):
+
+                toss = input(xplayer + " 'HEADS' or 'TAIL' Enter 1 for head 0 for tail ")
+
+                if toss.isdigit():
+                    toss = int(toss)
+                    if (toss == 1 or toss == 0):
+                        if toss1 == toss:
+                            print(xplayer + " You won the toss,Your turn")
+                            turn = 1
+                        else:
+                            print(xplayer + " You lose the toss,computers turn")
+                            turn = 0
+                        break
+                    else:
+                        print("> Please Enter Valid input <")
+                else:
+                    print("> Please Enter Valid input <")
+
+            board()
+            while (True):
+
+                if turn == 1:
+
+                    xinput = input(xplayer + " Enter the position for , " + symbol1 + " ")
+                    while xinput not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
+                        print("Invalid input enter between(0-8)")
+                        xinput = input(xplayer + " Enter the position for , " + symbol1 + " ")
+                    xinput = int(xinput)
+
+                    while list[xinput] == symbol1 or list[xinput] == symbol2:
+
+                        while xinput not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
+                            print("Invalid input")
+                            xinput = input(xplayer + " Enter the position for , " + symbol1 + " ")
+
+                        xinput = int(xinput)
+                    list[xinput] = symbol1
+                    board()
+                    if horizontal():
+                        if winner == symbol1:
+                            print(xplayer + " is winner")
+                        elif winner == symbol2:
+                            print("computer is winner")
+                        break
+
+                    if verticalwin():
+                        if winner == symbol1:
+                            print(xplayer + " is winner")
+                        elif winner == symbol2:
+                            print("Computer is winner")
+                        break
+                    if diagonalwin():
+                        if winner == symbol1:
+                            print(xplayer + " is winner")
+                        elif winner == symbol2:
+                            print("Computer is winner")
+                        break
+                    if tie():
+                        print("Its a tie")
+                        break
+
+                    turn = turn - 1
+
+                if turn == 0:
+                    print("computers turn,computers symbol is  " + symbol2)
+
+                    comp_win()
+
+
+
+                    if horizontal():
+                        if winner == symbol1:
+                            print(xplayer + " is winner")
+                        elif winner == symbol2:
+                            print("Computer is winner")
+                        break
+
+                    if verticalwin():
+                        if winner == symbol1:
+                            print(xplayer + " is winner")
+                        elif winner == symbol2:
+                            print("Computer is winner")
+                        break
+                    if diagonalwin():
+                        if winner == symbol1:
+                            print(xplayer + " is winner")
+                        elif winner == symbol2:
+                            print("Computer is winner")
+                        break
+                    if tie():
+                        print("Its a tie")
+                        break
+
+                    comp_draw()
+                    board()
+                    turn = 1
+
+
+            print("Type 'restart' to restart")
+            print("or type 'quit' to Quit")
+    elif command.lower()=="quit":
+        print("Thanks ")
+        break
+    else:
+        print("I DONT UNDERSTAND......")
